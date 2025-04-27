@@ -24,5 +24,12 @@ jobs:
 
       - name: Publish project
         run: dotnet publish --configuration Release --no-restore --output ./publish
-        
- 
+
+      - name: Deploy to Production via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./publish/
+          server-dir: /httpdocs/
